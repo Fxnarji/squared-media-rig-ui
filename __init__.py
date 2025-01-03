@@ -43,7 +43,7 @@ class SQM_Rig_Preferences(bpy.types.AddonPreferences):
         name="Append or Link",  
         description="Choose whether to Append or Link the collection", 
         items=AppendOrLinkItems,  
-        default='LINK'
+        default='APPEND'
     )#type: ignore
     
     Snapping: bpy.props.EnumProperty(
