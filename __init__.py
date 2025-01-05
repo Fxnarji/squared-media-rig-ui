@@ -2,17 +2,17 @@
 import bpy
 from . import properties
 from .ops.Snapper import OBJECT_OT_FK_to_IK_snapper  
-from .operators import EXPERIMENTAL_OT_Null, IMAGE_OT_pack, IMAGE_OT_reload, OBJECT_OT_keyframe_all_properties, COLLECTION_OT_import_rig_collection, SCENE_OT_set_view_camera, SCENE_OT_reset_view_camera, UPDATE_OT_install_latest
+from .operators import EXPERIMENTAL_OT_Null, IMAGE_OT_pack, IMAGE_OT_reload, OBJECT_OT_keyframe_all_properties, COLLECTION_OT_import_rig_collection, SCENE_OT_set_view_camera, SCENE_OT_reset_view_camera
 from .ui.UIHeader import VIEW3D_PT_ui_Main
 from .ui.VisibilitySettings import VIEW3D_PT_visibility_settings
-from .ui.RigSettings import VIEW3D_PT_rig_settings, VIEW3D_PT_face_settings, VIEW3D_PT_arm_settings, VIEW3D_PT_body_settings, VIEW3D_PT_optimization_settings, VIEW3D_PT_leg_settings, VIEW3D_PT_roundness_settings
+from .ui.RigSettings import VIEW3D_PT_face_settings, VIEW3D_PT_arm_settings, VIEW3D_PT_body_settings, VIEW3D_PT_leg_settings, VIEW3D_PT_roundness_settings
 from .list import VIEW3D_PT_RigListPanel, RigListProperties, RigItem, RigListUI, SCENE_OT_RefreshRigList
 
 bl_info = {
-    "name": "Squared Media Rig UI Addon - EXPERIMENTAL",
+    "name": "Squared Media Rig UI Addon",
     "description": "Adds RIG UI for Supported Rigs",
     "author": "Squared Media, Fxnarji",
-    "version": (0, 2, 2),
+    "version": (0, 2, 5),
     "blender": (4, 3, 2),
     "location": "Npanel > SQMDefaultRig",
     "support": "COMMUNITY",
@@ -37,7 +37,7 @@ class SQM_Rig_Preferences(bpy.types.AddonPreferences):
     RigTabs = [
         ('SKIN', "Skin", "automatically places keyframes"),
         ('RIG', "Rig", "Normal IK / FK Snapping"),
-        ('SETTINGS', "Misc", "Normal IK / FK Snapping"),
+        ('SETTINGS', "Settings", "Normal IK / FK Snapping"),
     ]
     DefaultImportOption: bpy.props.EnumProperty(
         name="Append or Link",  
@@ -96,20 +96,17 @@ classes = [
         OBJECT_OT_keyframe_all_properties,
         
         COLLECTION_OT_import_rig_collection,
-        UPDATE_OT_install_latest,
 
         EXPERIMENTAL_OT_Null,
 
         # UI Classes
         VIEW3D_PT_ui_Main,
         VIEW3D_PT_visibility_settings,
-        VIEW3D_PT_rig_settings,
         VIEW3D_PT_face_settings,
         VIEW3D_PT_arm_settings,
         VIEW3D_PT_body_settings,
         VIEW3D_PT_leg_settings,
         VIEW3D_PT_roundness_settings,
-        VIEW3D_PT_optimization_settings,
         VIEW3D_PT_RigListPanel
     ]
 

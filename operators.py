@@ -124,9 +124,8 @@ class SCENE_OT_set_view_camera(bpy.types.Operator):
 
     def execute(self, context):
         rig = bpy.context.active_object
-        
-        # since rig made by me and linked from addon structure itself, we know that rig will always have a custom property containing the face camera 
         SQM_Camera = rig["Cam"]
+        SQM_Camera.hide_viewport = False
         bpy.context.space_data.use_local_camera = True
         bpy.context.space_data.camera = SQM_Camera
         bpy.context.space_data.lock_camera = True
@@ -139,44 +138,14 @@ class SCENE_OT_reset_view_camera(bpy.types.Operator):
     
    
     def execute(self, context):
+        rig = bpy.context.active_object
+        SQM_Camera = rig["Cam"]
         bpy.context.space_data.use_local_camera = False
         bpy.context.space_data.lock_object = None
         bpy.context.space_data.lock_camera = False
+        SQM_Camera.hide_viewport = True
         bpy.ops.view3d.view_camera()
         return {"FINISHED"}
-
-class UPDATE_OT_install_latest(bpy.types.Operator):
-    """Download and install an addon from GitHub"""
-    bl_idname = "squaredmedia.download_latest_version"
-    bl_label = "Download and Install Addon"
-    
-    url: bpy.props.StringProperty(
-        name="Download URL",
-        description="URL of the addon .zip file to download",
-        default= GitubRepo
-    )#type: ignore
-    
-    def execute(self, context):
-        try:
-
-            addon_dir = bpy.utils.user_resource('SCRIPTS')
-            if not addon_dir:
-                self.report({'ERROR'}, "Could not locate Blender's addon directory.")
-                return {'CANCELLED'}
-            
-            file_path = os.path.join(addon_dir, properties.AddonProperties.module_name)
-            
-            urllib.request.urlretrieve(self.url, file_path)
-            
-            bpy.ops.preferences.addon_install(filepath=file_path, overwrite=True)
-            bpy.ops.preferences.addon_enable(module=properties.AddonProperties.module_name)
-            
-            self.report({'INFO'}, "Addon downloaded, installed, and enabled.")
-            return {'FINISHED'}
-        except Exception as e:
-            self.report({'ERROR'}, f"Failed to download or install addon: {e}")
-            return {'CANCELLED'}
-
 
 #debug Operator
 class EXPERIMENTAL_OT_Null(bpy.types.Operator):

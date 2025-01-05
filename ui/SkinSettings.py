@@ -60,8 +60,14 @@ def advanced_eye_settings(self, context, EyeR, ParentBox, name):
     row.prop(EyeR[14], "default_value", text = "")
 
 
-def draw_eyebrows(self,context,Parentbox):
+def draw_eyebrows(self,context,Eyebrow,Parentbox, name):
      rig = bpy.context.active_object
+     Parentbox.label(text=name)
+     row = Parentbox.row()
+     row.prop(Eyebrow[0], "default_value", text = Eyebrow[0].name)
+
+     row = Parentbox.row()
+     row.prop(Eyebrow[1], "default_value", text = Eyebrow[1].name)
 
 def draw_skin_settings(self, context):
     rig = bpy.context.active_object
@@ -72,56 +78,75 @@ def draw_skin_settings(self, context):
     if Mat_obj is None:
             Errorbox = layout.box()
             Errorbox.label(text="ERROR: No material object found")
-            return
-
-    #face settings
-    FaceBox = layout.box()
-    FaceBox.label(text="Face")
-    FaceBox.prop(rig.pose.bones["MCH-FaceSlider"],"location", text= "Face position", index = 1, toggle = True)  
-    FaceBox.prop(rig.pose.bones["MCH-Eyebrows"],"location", text= "Eyebrow position", index = 2, toggle = True)    
-    FaceBox.prop(rig.pose.bones["MCH-Eyes"],"location", text= "Eye position", index = 1, toggle = True) 
-    FaceBox.prop(rig.pose.bones["MCH-Mouth"],"location", text= "Mouth position", index = 2, toggle = True)   
+            return  
     
     #Proportions
     ProportionsBox = layout.box()
-    ProportionsBox.label(text="Proportions")
+    ProportionsBox.label(text="Face Configurator")
+
+    row = ProportionsBox.row()
+    row.prop(rig.pose.bones["Settings"],'["Eyebrow_R_enabled"]', text="Eyebrow R", toggle = True)
+    row.prop(rig.pose.bones["Settings"],'["Eyebrow_L_enabled"]', text="Eyebrow L", toggle = True)
+
+    row = ProportionsBox.row()
+    split = row.split(factor=0.5)
+    col = split.column(align = True)
+    col.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_R"]',index = 0, text = "Eyebrow R Thickness")
+    col.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_R"]',index = 1, text = "Eyebrow R Height")
+    col.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_R_width"]', text = "Eyebrow R Width")
+
+
+    col = split.column(align = True)
+    col.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_L"]',index = 0, text = "Eyebrow L Thickness")
+    col.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_L"]',index = 1, text = "Eyebrow L Height")
+    col.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_L_width"]', text = "Eyebrow L Width")
+
+
+
+
+
+    row = ProportionsBox.row()
+    row.prop(rig.pose.bones["Settings"],'["Eye_R_enable"]', text="Eye R", toggle=True)
+    row.prop(rig.pose.bones["Settings"],'["Eye_L_enable"]', text="Eye L", toggle=True)
+
+
 
     row = ProportionsBox.row()
     col = row.column(align=True)
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eye.R"],"scale",index= 0, toggle = True, text = "Eye R Width")
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eye.R"],"scale",index= 1, toggle = True, text = "Eye R Height")
+    col.prop(rig.pose.bones["MCH-Eyes"],'["Eye_R_Height"]', toggle = True, text = "Eye R Height")
+    col.prop(rig.pose.bones["MCH-Eyes"],'["Eye_L_Height"]', toggle = True, text = "Eye L Height")
 
     col = row.column(align=True)
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eye.L"],"scale",index= 0, toggle = True, text = "Eye L Width")
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eye.L"],"scale",index= 1, toggle = True, text = "Eye L Height")    
+    col.prop(rig.pose.bones["MCH-Eyes"],'["Eye_R_Width"]', toggle = True, text = "Eye R Width")
+    col.prop(rig.pose.bones["MCH-Eyes"],'["Eye_L_Width"]', toggle = True, text = "Eye L Width")
+    
 
-    row = ProportionsBox.row()
-    col = row.column(align=True)
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eyebrow.L"],"scale",index= 0, toggle = True, text = "Eyebrow Width")
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eyebrow.L"],"scale",index= 1, toggle = True, text = "Eyebrow Thick")
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eyebrow.L"],"scale",index= 2, toggle = True, text = "Eyebrow Height")
 
-    col = row.column(align=True)
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eyebrow.R"],"scale",index= 0, toggle = True, text = "Eyebrow Width")
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eyebrow.R"],"scale",index= 1, toggle = True, text = "Eyebrow Thick")
-    col.prop(rig.pose.bones["MCH-ScaleOffset-Eyebrow.R"],"scale",index= 2, toggle = True, text = "Eyebrow Height")
+    ProportionsBox.prop(rig.pose.bones["Settings"],'["Mouth_enable"]', text = "Mouth", toggle = True)
+
+
+    col = ProportionsBox.row()
+    col.prop(rig.pose.bones["MCH-FaceSlider"],'["FaceHeight"]', toggle = True, text = "Face Height")
+
+
     
     #Eyebrows
     EyebrowBox = layout.box()
     EyebrowBox.label(text="Eyebrows")
-    row = EyebrowBox.row()
-    row.prop(rig.pose.bones["Settings"],'["Eyebrow_R_enabled"]', text="Eyebrow R", toggle = True)
-    row.prop(rig.pose.bones["Settings"],'["Eyebrow_L_enabled"]', text="Eyebrow L", toggle = True)
-    draw_eyebrows(self, context, EyebrowBox)
+
+    EyebrowL = Mat_obj.material_slots[3].material.node_tree.nodes["Eyebrow"].inputs
+    EyebrowR = Mat_obj.material_slots[4].material.node_tree.nodes["Eyebrow"].inputs
+
+    split = EyebrowBox.split(factor=0.5)
+    draw_eyebrows(self, context, EyebrowR, split.box(), "Right")
+    draw_eyebrows(self, context, EyebrowL, split.box(), "Left")
+
 
    
     
     #Eye Settings
     ColorBox = layout.box()
     ColorBox.label(text="Eye Settings")
-    row = ColorBox.row()
-    row.prop(rig.pose.bones["Settings"],'["Eye_R_enable"]', text="Eye R", toggle=True)
-    row.prop(rig.pose.bones["Settings"],'["Eye_L_enable"]', text="Eye L", toggle=True)
 
 
     Eye = ColorBox.row()
@@ -161,18 +186,7 @@ def draw_skin_settings(self, context):
     else:
         EyeLBox.label(text="disabled")
 
-    
-    
-
-    
-    #mouth
-    MouthBox = layout.box()
-    MouthBox.label(text="Mouth")
-    MouthBox.prop(rig.pose.bones["Settings"],'["Mouth_enable"]', toggle = True)
-
-
-
-        
+           
 
 
 

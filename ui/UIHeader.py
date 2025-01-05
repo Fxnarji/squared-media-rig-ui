@@ -23,9 +23,8 @@ class VIEW3D_PT_ui_Main(bpy.types.Panel):
         layout = self.layout
         header = layout.box()
         row = header.row()
-        row.label(text="A CHANGER", icon="RENDER_ANIMATION")
+        row.label(text="Squared Media", icon="RENDER_ANIMATION")
 
-        row.operator("squaredmedia.download_latest_version", text="Update Addon", icon="IMPORT")
 
         layout.separator()
         col = layout.row()
@@ -41,11 +40,12 @@ class VIEW3D_PT_ui_Main(bpy.types.Panel):
         
 
         #drawing main contents of Rig UI
-        layout.separator()
-        if preferences.preferences.rigTab == "SKIN":
-            draw_skin_settings(self, context)
-        elif preferences.preferences.rigTab == "SETTINGS":
-            draw_buttons(self, context)
+        if context.active_object and context.active_object.get("rig_id") == rigID and get_material_object(context.active_object):
+            layout.separator()
+            if preferences.preferences.rigTab == "SKIN":
+                draw_skin_settings(self, context)
+            elif preferences.preferences.rigTab == "SETTINGS":
+                draw_buttons(self, context)
     
 
     

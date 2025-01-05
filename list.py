@@ -42,19 +42,22 @@ class VIEW3D_PT_RigListPanel(bpy.types.Panel):
 
         # Import and load buttons
         sublayout = layout.row(align=True)
-        sublayout = sublayout.split(factor=0.85, align=True)
         sublayout.scale_y = 2
         
-        import_op = sublayout.operator("squaredmedia.import_rig", text="Import Rig", icon="IMPORT")
-        import_op.collection_name = rig_props.rigs[rig_props.active_rig_index].name
-        import_op.rig_path = rig_props.rigs[rig_props.active_rig_index].id
-        import_op.imported_name = preferences.CollectionName or rig_props.rigs[rig_props.active_rig_index].name
-        
-        sublayout.operator("squaredmedia.load_rigs", text="", icon="FILE_REFRESH")
+        if len(rig_props.rigs) > 0:
+            sublayout = sublayout.split(factor=0.85, align=True)
+            import_op = sublayout.operator("squaredmedia.import_rig", text="Import Rig", icon="IMPORT")
+            import_op.collection_name = rig_props.rigs[rig_props.active_rig_index].name
+            import_op.rig_path = rig_props.rigs[rig_props.active_rig_index].id
+            import_op.imported_name = preferences.CollectionName or rig_props.rigs[rig_props.active_rig_index].name
 
-        row = layout.row()
-        row.enabled = False
-        row.label(text=f"Mode = {preferences.DefaultImportOption.lower()}")
+            sublayout.operator("squaredmedia.load_rigs", text="", icon="FILE_REFRESH")
+
+            row = layout.row()
+            row.enabled = False
+            row.label(text=f"Mode = {preferences.DefaultImportOption.lower()}")
+        else:
+            sublayout.operator("squaredmedia.load_rigs", text="Please click to refresh", icon = "FILE_REFRESH")
 
 
 class SCENE_OT_RefreshRigList(bpy.types.Operator):

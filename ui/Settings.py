@@ -20,14 +20,40 @@ def draw_buttons(self, context):
     
     #Snapper
     SnapperBox = layout.box()
-    SnapperBox.label(text="Snapper")
-    SnapArmsLeft = SnapperBox.operator("squaredmedia.snapper", text="Arm L FK -> IK", icon = "SNAP_ON")
+    SnapperBox.label(text="Snapping")
+
+    ArmL = SnapperBox.box()
+    ArmL.label(text="Arm L")
+    row = ArmL.row(align = True)
+
+    SnapArmsLeft = row.operator("squaredmedia.snapper", text="Snap to FK", icon = "SNAP_ON")
     SnapArmsLeft.limb = 'Arm_L'
     SnapArmsLeft.mode = bpy.context.preferences.addons[properties.AddonProperties.module_name].preferences.Snapping
-    
-    SnapArmsRight = SnapperBox.operator("squaredmedia.snapper", text="Arm R FK -> IK", icon = "SNAP_ON")
+    SnapArmsLeft.direction = "IK_TO_FK"
+
+    SnapArmsLeft = row.operator("squaredmedia.snapper", text="Snap to IK", icon = "SNAP_OFF")
+    SnapArmsLeft.limb = 'Arm_L'
+    SnapArmsLeft.mode = bpy.context.preferences.addons[properties.AddonProperties.module_name].preferences.Snapping
+    SnapArmsLeft.direction = "FK_TO_IK"
+
+
+    ArmR = SnapperBox.box()
+    ArmR.label(text="Arm R")
+    row = ArmR.row(align=True)
+
+    SnapArmsRight = row.operator("squaredmedia.snapper", text="Snap to FK", icon = "SNAP_ON")
     SnapArmsRight.limb = 'Arm_R'
     SnapArmsRight.mode = bpy.context.preferences.addons[properties.AddonProperties.module_name].preferences.Snapping
+    SnapArmsRight.direction = "IK_TO_FK"
+
+    SnapArmsRight = row.operator("squaredmedia.snapper", text="Snap to  IK", icon = "SNAP_OFF")
+    SnapArmsRight.limb = 'Arm_R'
+    SnapArmsRight.mode = bpy.context.preferences.addons[properties.AddonProperties.module_name].preferences.Snapping
+    SnapArmsRight.direction = "FK_TO_IK"
+
+  
+
+    
 
 
     #Retargeting
@@ -51,7 +77,6 @@ def draw_buttons(self, context):
     optimization_box.label(text="Optimizations")
 
     row = optimization_box.row(align=False)
-    row.prop(rig.pose.bones["Settings"], '["Potato Mode"]', toggle=True, text="High Quality Preview")
     
     row = optimization_box.row(align=False)
     row.prop(rig.pose.bones["Settings"], '["Skin Layer 02"]', toggle=True)
