@@ -108,7 +108,7 @@ class OBJECT_OT_FK_to_IK_snapper(bpy.types.Operator):
             bpy.context.view_layer.update()
             controller.matrix = fk_hand_bone.matrix
             controller.bone.select = True
-            bpy.ops.transform.translate(value=(0,fk_hand_bone.length,0))
+            bpy.ops.transform.translate(value=(0,fk_hand_bone.length,0), orient_type="LOCAL")
             controller.bone.select = False
 
 
@@ -116,7 +116,7 @@ class OBJECT_OT_FK_to_IK_snapper(bpy.types.Operator):
             bpy.context.view_layer.update()
             pole.matrix = fk_hand_bone.matrix
             pole.bone.select = True
-            bpy.ops.transform.translate(value=(0,-.4,0))
+            bpy.ops.transform.translate(value=(0,-.4,0), orient_type="LOCAL")
 
             if self.mode == 'SMART':
                         Arm_IK[data] = 0

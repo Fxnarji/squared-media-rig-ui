@@ -2,7 +2,7 @@ import bpy
 from ..utils import get_material_object
 from .. import properties
 from .SkinSettings import draw_skin_settings
-from .Settings import draw_buttons
+from .Settings import draw_all_settings
 
 rigID = properties.RigProperties.rigID
 category = properties.UIProperties.category
@@ -16,8 +16,6 @@ class VIEW3D_PT_ui_Main(bpy.types.Panel):
     bl_category = category
 
     #properties
-
-
 
     def draw(self, context):
         layout = self.layout
@@ -45,7 +43,7 @@ class VIEW3D_PT_ui_Main(bpy.types.Panel):
             if preferences.preferences.rigTab == "SKIN":
                 draw_skin_settings(self, context)
             elif preferences.preferences.rigTab == "SETTINGS":
-                draw_buttons(self, context)
+                draw_all_settings(self, context)
     
 
     

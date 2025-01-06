@@ -57,8 +57,7 @@ def advanced_eye_settings(self, context, EyeR, ParentBox, name):
     row = Reflection.row()
     row = row.split(factor=0.5)
     row.label(text="Rotation")
-    row.prop(EyeR[14], "default_value", text = "")
-
+    row.prop(EyeR[15], "default_value", text = "")
 
 def draw_eyebrows(self,context,Eyebrow,Parentbox, name):
      rig = bpy.context.active_object

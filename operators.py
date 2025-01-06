@@ -117,7 +117,7 @@ class COLLECTION_OT_import_rig_collection(bpy.types.Operator):
 
         return {'FINISHED'}
     
-class SCENE_OT_set_view_camera(bpy.types.Operator):
+class SCENE_OT_toggle_face_camera(bpy.types.Operator):
     bl_idname = "squaredmedia.set_camera" 
     bl_label ="sets Face Animation camera to be active"
 
@@ -125,28 +125,21 @@ class SCENE_OT_set_view_camera(bpy.types.Operator):
     def execute(self, context):
         rig = bpy.context.active_object
         SQM_Camera = rig["Cam"]
-        SQM_Camera.hide_viewport = False
-        bpy.context.space_data.use_local_camera = True
-        bpy.context.space_data.camera = SQM_Camera
-        bpy.context.space_data.lock_camera = True
-        bpy.ops.view3d.view_camera()
-        return {"FINISHED"}
-    
-class SCENE_OT_reset_view_camera(bpy.types.Operator):
-    bl_idname = "squaredmedia.reset_camera" 
-    bl_label="sets new camera to be active"
-    
-   
-    def execute(self, context):
-        rig = bpy.context.active_object
-        SQM_Camera = rig["Cam"]
-        bpy.context.space_data.use_local_camera = False
-        bpy.context.space_data.lock_object = None
-        bpy.context.space_data.lock_camera = False
-        SQM_Camera.hide_viewport = True
-        bpy.ops.view3d.view_camera()
-        return {"FINISHED"}
 
+        if SQM_Camera.hide_viewport: 
+            SQM_Camera.hide_viewport = False
+            bpy.context.space_data.use_local_camera = True
+            bpy.context.space_data.camera = SQM_Camera
+            bpy.context.space_data.lock_camera = True
+            bpy.ops.view3d.view_camera()
+            return {"FINISHED"}
+        else:
+            bpy.context.space_data.use_local_camera = False
+            bpy.context.space_data.lock_object = None
+            bpy.context.space_data.lock_camera = False
+            SQM_Camera.hide_viewport = True
+            bpy.ops.view3d.view_camera()
+            return {"FINISHED"}
 #debug Operator
 class EXPERIMENTAL_OT_Null(bpy.types.Operator):
     bl_idname = "squaredmedia.null"

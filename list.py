@@ -80,23 +80,3 @@ class SCENE_OT_RefreshRigList(bpy.types.Operator):
             rig_item.icon = rig[2]
 
         return {"FINISHED"}
-
-
-def register():
-    bpy.utils.register_class(VIEW3D_PT_RigListPanel)
-    bpy.utils.register_class(RigItem)
-    bpy.utils.register_class(RigListProperties)
-    bpy.utils.register_class(RigListUI)
-    bpy.utils.register_class(SCENE_OT_RefreshRigList)
-
-
-def unregister():
-    bpy.utils.unregister_class(SCENE_OT_RefreshRigList)
-    bpy.utils.unregister_class(RigListUI)
-    bpy.utils.unregister_class(RigListProperties)
-    bpy.utils.unregister_class(RigItem)
-    bpy.utils.unregister_class(VIEW3D_PT_RigListPanel)
-
-
-if __name__ == "__main__":
-    register()
