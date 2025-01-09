@@ -2,7 +2,7 @@
 import bpy
 from . import properties
 from .ops.Snapper import OBJECT_OT_FK_to_IK_snapper  
-from .operators import EXPERIMENTAL_OT_Null, IMAGE_OT_pack, IMAGE_OT_reload, OBJECT_OT_keyframe_all_properties, COLLECTION_OT_import_rig_collection, SCENE_OT_toggle_face_camera
+from .operators import EXPERIMENTAL_OT_set_pose, EXPERIMENTAL_OT_Null, IMAGE_OT_pack, IMAGE_OT_reload, OBJECT_OT_keyframe_all_properties, COLLECTION_OT_import_rig_collection, SCENE_OT_toggle_face_camera
 from .ui.UIHeader import VIEW3D_PT_ui_Main
 from .ui.VisibilitySettings import VIEW3D_PT_visibility_settings
 from .ui.RigSettings import Test, VIEW3D_PT_face_settings, VIEW3D_PT_arm_settings, VIEW3D_PT_body_settings, VIEW3D_PT_leg_settings, VIEW3D_PT_roundness_settings
@@ -12,7 +12,7 @@ bl_info = {
     "name": "Squared Media Rig UI Addon",
     "description": "Adds RIG UI for Supported Rigs",
     "author": "Squared Media, Fxnarji",
-    "version": (0, 3, 0),
+    "version": (0, 3, 4),
     "blender": (4, 3, 2),
     "location": "Npanel > SQMDefaultRig",
     "support": "COMMUNITY",
@@ -59,12 +59,13 @@ class SQM_Rig_Preferences(bpy.types.AddonPreferences):
     rigTab: bpy.props.EnumProperty(
         name="Rig Tab",
         description="Choose wich tab is open",
-        items=RigTabs
+        items=RigTabs,
+        default="SETTINGS"
     )#type: ignore
     
     textinput: bpy.props.StringProperty() #type: ignore
 
-    ShowExperimental: bpy.props.BoolProperty(default=False)#type: ignore
+    ShowExperimental: bpy.props.BoolProperty(default=True)#type: ignore
     
     built_in_path: bpy.props.StringProperty(default=properties.Paths.default_lib_path)                                  #type: ignore
 
@@ -107,6 +108,7 @@ classes = [
         COLLECTION_OT_import_rig_collection,
 
         EXPERIMENTAL_OT_Null,
+        EXPERIMENTAL_OT_set_pose,
 
         # UI Classes
         VIEW3D_PT_ui_Main,

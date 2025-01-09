@@ -100,7 +100,8 @@ def draw_skin_settings(self, context):
     col.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_L"]',index = 1, text = "Eyebrow L Height")
     col.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_L_width"]', text = "Eyebrow L Width")
 
-
+    row = ProportionsBox.row()
+    row.prop(rig.pose.bones["MCH-Eyebrows"],'["Eyebrow_gap"]', toggle = True, text = "Eyebrow Gap")
 
 
 
@@ -119,9 +120,16 @@ def draw_skin_settings(self, context):
     col.prop(rig.pose.bones["MCH-Eyes"],'["Eye_R_Width"]', toggle = True, text = "Eye R Width")
     col.prop(rig.pose.bones["MCH-Eyes"],'["Eye_L_Width"]', toggle = True, text = "Eye L Width")
     
-
+    row = ProportionsBox.row()
+    row.prop(rig.pose.bones["MCH-Eyes"],'["Eye_Gap"]', toggle = True, text = "Eye Gap")
+   
+   
+    
 
     ProportionsBox.prop(rig.pose.bones["Settings"],'["Mouth_enable"]', text = "Mouth", toggle = True)
+    
+    if rig.pose.bones["Settings"]["Mouth_enable"]:
+        ProportionsBox.box().prop(rig.pose.bones["Settings"],'["Teeth_enable"]', text = "Teeth", toggle = True)
 
 
     col = ProportionsBox.row()
@@ -193,10 +201,10 @@ def draw_skin_settings(self, context):
     # Second Skin Layer
     SecondLayerBox = layout.box()
     SecondLayerBox.label(text="Second Layer")
-    left = SecondLayerBox.row(align=True)
-    left.prop(rig.pose.bones["Settings"], '["Skin Layer 02"]', toggle=True, text = "Viewport", icon ="RESTRICT_VIEW_OFF")
-    right = left.row(align=True)
-    right.prop(rig.pose.bones["Settings"], '["Skin Layer 02 Render"]', toggle=True , text = "Render", icon = "RESTRICT_RENDER_OFF")
+    row = SecondLayerBox.row()
+    Layer02 = rig.pose.bones["Settings"].get("Layer02", None) 
+    row.prop(Layer02, "hide_viewport", text = "Viewport", invert_checkbox = True, icon = "LAYER_USED")
+    row.prop(Layer02, "hide_render", text = "Render", invert_checkbox = True, icon = "LAYER_USED")
 
 
     #Texture Box

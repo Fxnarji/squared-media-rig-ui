@@ -123,6 +123,8 @@ class OBJECT_OT_FK_to_IK_snapper(bpy.types.Operator):
                         Arm_IK.keyframe_insert(data_path=data_path, keytype = 'GENERATED')
                         pole.keyframe_insert(data_path="location", keytype = 'GENERATED')
                         controller.keyframe_insert(data_path="location", keytype = 'GENERATED')
+                        controller.keyframe_insert(data_path="rotation_quaternion", keytype = 'GENERATED')                     
+
 
                         Arm_IK[data] = 1
                         Arm_IK.keyframe_insert(data_path=data_path, keytype = 'GENERATED', frame = bpy.context.scene.frame_current + 1)

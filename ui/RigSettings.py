@@ -81,8 +81,8 @@ class VIEW3D_PT_arm_settings(bpy.types.Panel):
         AttachmentBox = layout.box()
         AttachmentBox.label(text="Attachments")
         col = AttachmentBox.column(align=False)
-        col.prop(rig.pose.bones["DEF-Attachment.L"], '["Parent to Arm"]', text="Parent to Arm L")
-        col.prop(rig.pose.bones["DEF-Attachment.R"], '["Parent to Arm"]', text="Parent to Arm R")
+        col.prop(rig.pose.bones["CTRL-HandAttachment.L"], '["Parent to Arm"]', text="Parent to Arm L")
+        col.prop(rig.pose.bones["CTRL-HandAttachment.R"], '["Parent to Arm"]', text="Parent to Arm R")
 
 class VIEW3D_PT_body_settings(bpy.types.Panel):
     bl_label = "Body Settings"

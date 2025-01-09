@@ -25,13 +25,14 @@ class VIEW3D_PT_visibility_settings(bpy.types.Panel):
 
         # Body Visibility
         BodyBox = layout.box()
-        BodyBox.label(text="Body Visibility")
+        BodyBox.label(text="General Visibility")
         col = BodyBox.column()
         row = col.row(align=True)
 
         row.prop(rig.data.collections_all["FaceSimple"], "is_visible", text="Face Simple", toggle=True)
         row.prop(rig.data.collections_all["FaceComplex"], "is_visible", text="Face Complex", toggle=True)
         col.prop(layers["Menu"], "is_visible", text="Menu", toggle=True)   
+        col.prop(layers["Settings"], "is_visible", text="Settings", toggle=True)   
         col.prop(layers["Debug"], "is_visible", text="Debug", toggle=True, icon = "SETTINGS")
 
         # IK Visibility

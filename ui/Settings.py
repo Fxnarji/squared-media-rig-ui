@@ -15,9 +15,9 @@ def draw_phenomes(self, context):
     #rest
 
     row = col.row(align=True)
-    row.operator("squaredmedia.null", text = "Ah / A")
-    row.operator("squaredmedia.null", text = "Ee / I")
-    row.operator("squaredmedia.null", text = "Oh / O")
+    row.operator("squaredmedia.set_pose", text = "Ah / A").phonem = "A"
+    row.operator("squaredmedia.set_pose", text = "Ee / I").phonem = "OO"
+    row.operator("squaredmedia.set_pose", text = "Oh / O").phonem = "OO"
 
     row = col.row(align=True)
     row.operator("squaredmedia.null", text = "Oo / U")
@@ -99,7 +99,9 @@ def draw_optimizations(self, context):
 
     #skin layer    
     row = optimization_box.row(align=False)
-    row.prop(rig.pose.bones["Settings"], '["Skin Layer 02"]', toggle=True)
+    Layer02 = rig.pose.bones["Settings"].get("Layer02", None) 
+    row.prop(Layer02, "hide_viewport", text = "Layer 02 Viewport", invert_checkbox = True, icon = "LAYER_USED")
+
     
     #subD
     row = optimization_box.row(align=False)
